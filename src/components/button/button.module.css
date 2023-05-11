@@ -1,0 +1,36 @@
+.model,
+.model:active,
+.model:focus,
+.model:hover {
+  display: inline-block;
+  /* width: 300px; */
+  background: #00000017 !important;
+  border-color: #00000017 !important;
+  color: #000 !important;
+  height: 60px;
+  border-radius: 30px;
+  outline: none;
+}
+.primary,
+.primary:active,
+.primary:focus,
+.primary:hover {
+  background: #10b801 !important;
+  border-color: #10b801 !important;
+  color: #fff !important;
+  font-weight: 500;
+  outline: none !important;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.content img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
