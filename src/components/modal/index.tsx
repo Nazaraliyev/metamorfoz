@@ -8,7 +8,7 @@ import { Button } from "..";
 import { submitVisitor } from "../../apis";
 
 const Modal = (props: ModalType) => {
-  const [submited, setSubmited] = useState<boolean>(false);
+  const [submited, setSubmited] = useState(props.isSubmit);
 
   const share = (isInstagram: boolean) => () => {
     if (isInstagram) {
@@ -20,9 +20,12 @@ const Modal = (props: ModalType) => {
 
   const submit = () => {
     console.log("submit");
+    const id = window.location.pathname.replace("/","");
+    console.log('id : ', id);
     // submitVisitor.then().catch();
     setSubmited(true);
   };
+
 
 
 

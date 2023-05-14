@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./app.module.css";
 
 import { Spin } from "antd";
@@ -11,7 +11,30 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const [data, setData] = useState<BubbleType[]>(mock);
+  const [button, setButton] = useState({
+    isSubmited:true,
+    text:"Hesabını təsdiqlə",
+    id:null
+  })
+  
 
+
+  useEffect(() => {
+    if(window.location.pathname && data.length !== 0){
+      const id = parseInt(window.location.pathname.replace("/",""));
+      if(id && id !== 0){
+        setButton(prevButton => {
+          const newButton = {...prevButton};
+          if(data.find(user => user?.id === id)?.isSleep){
+            newButton.text = "Sosial Şəbəkə paylaş";
+            newButton.isSubmited = true;
+          }
+          newButton.id = id;
+          return newButton;
+        })
+      }
+    }
+  },[window.location, data]);
 
   // Functions
   const toggleModal = () => {
@@ -19,7 +42,7 @@ const App = () => {
   };
   return (
     <>
-      <Modal visible={modal} closeModal={toggleModal} />
+      <Modal visible={modal} closeModal={toggleModal}  isSubmit={button.isSubmited}/>
       <Spin
         spinning={loading}
         tip="Loading..."
@@ -36,13 +59,15 @@ const App = () => {
               </div>
             </div>
           </div>
-          <div className={styles.button}>
-                <Button
-                  title="Hesabını təsdiqlə"
-                  type="primary"
-                  onClick={toggleModal}
-                />
-              </div>
+          {
+            button.id && <div className={styles.button}>
+            <Button
+              title={button.text}
+              type="primary"
+              onClick={toggleModal}
+            />
+          </div>
+          }
         </div>
       </Spin>
     </>
