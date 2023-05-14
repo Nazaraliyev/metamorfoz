@@ -11,6 +11,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const [data, setData] = useState<BubbleType[]>(mock);
+  const [count, setCount] = useState(0);
   const [button, setButton] = useState({
     isSubmited:true,
     text:"Hesabını təsdiqlə",
@@ -18,6 +19,12 @@ const App = () => {
   })
   
 
+  useEffect(() => {
+    if(count=== 0){
+      const width = window.innerWidth-400;
+      setCount((width/60)-4)
+    }
+  },[])
 
   useEffect(() => {
     if(window.location.pathname && data.length !== 0){
@@ -53,7 +60,12 @@ const App = () => {
           <div className={styles.container}>
             <div className={styles.content}>
               <div className={styles.bubbles}>
-                {data.map((item, index) => (
+                {
+                  data.slice(0,count).map((item, index) =><Bubble key={index} {...item}  index={index}/> )
+                }
+              </div>
+              <div className={styles.bubbles}>
+                {data.slice(count+1).map((item, index) => (
                   <Bubble key={index} {...item}  index={index}/>
                 ))}
               </div>
@@ -392,4 +404,140 @@ const mock: BubbleType[] = [
     name: "Salam yaxsiyam",
     comment: "COmment dana",
   },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  { isMan: true, isSleep: true, name: "Salam Salam", comment: null },
+  {
+    isMan: false,
+    isSleep: false,
+    name: "Salam yaxsiyam",
+    comment: "COmment dana",
+  },
+  
 ];
