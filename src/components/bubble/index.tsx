@@ -1,4 +1,3 @@
-import { useState, useEffect, useCallback } from "react";
 import cx from "classnames";
 import styles from "./bubble.module.css";
 
@@ -15,32 +14,27 @@ const Comment = (props: CommentType) => {
 
 const Bubble = (props: BubbleType) => {
   const generateStyle = () => {
-    const random = Math.round(Math.random() * 10);
+    const random = Math.round(Math.random() * 100)%40;
+    const scale = random/40;
+
     return {
-      top: `${random}%`,
-      lef: `${random}%`,
-      transform: `scale(${random > 5 ? random / 10 : 0.8})`,
+      top: `${random+1}%`,
+      left: `${random}%`,
+      transform: `scale(${scale < 0.5 ?  1-scale:scale})`,
     };
   };
 
+
   return (
     <div
-      className={cx(styles.wrapper, { [styles.top]: props.comment })}
-      style={generateStyle()}
+      className={cx(styles.wrapper, { [styles.top]: props.comment }, props.className)}
+      style={{zIndex:1000-props.index}}
     >
-      <div className={styles.content}>
-        {props.isSleep ? (
-          <>
-            <img src={props.isMan ? modalAvatarMan : modalAvatarMan} />
-          </>
-        ) : (
-          <>
-            <img src={props.isMan ? modalAvatarMan : modalAvatarMan} />
-            {props.comment && <Comment title={props.comment} />}
-          </>
-        )}
+      <div className={styles.content} style={generateStyle()}>
+          <img src={props.isMan ? modalAvatarMan : modalAvatarMan} />
+          {props.comment && <Comment title={props.comment} />}
+          <span>{props.name}</span>
       </div>
-      <span>{props.name}</span>
     </div>
   );
 };

@@ -7,4 +7,6 @@ export interface BubbleType {
   isSleep: boolean;
   name: string;
   comment: string|null;
+  className?:string;
+  index:number
 }
