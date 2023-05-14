@@ -9,47 +9,48 @@ import { BubbleType } from "../components/bubble/types";
 const App = () => {
   // States
   const [loading, setLoading] = useState(false);
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState({
+    visible:false,
+    data:{}
+  });
   const [data, setData] = useState<BubbleType[]>(mock);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState({
+    top:0,
+    bottom:0
+  });
   const [button, setButton] = useState({
-    isSubmited:true,
     text:"Hesabını təsdiqlə",
-    id:null
   })
-  
 
   useEffect(() => {
-    if(count=== 0){
-      const width = window.innerWidth-400;
-      setCount((width/60)-4)
+    if(count.top=== 0){
+      const width = window.innerWidth-200;
+      const normalCount = Math.floor((width-140)/120);
+      const topCount = ((width-200)/60)-4;
+      const bottomRemainder = ((data.length-topCount)%normalCount)
+      setCount({top:topCount, bottom:normalCount*2+bottomRemainder});
     }
   },[])
 
   useEffect(() => {
-    if(window.location.pathname && data.length !== 0){
+    if(data.length !== 0 && Object.keys(modal.data).length === 0){
       const id = parseInt(window.location.pathname.replace("/",""));
-      if(id && id !== 0){
-        setButton(prevButton => {
-          const newButton = {...prevButton};
-          if(data.find(user => user?.id === id)?.isSleep){
-            newButton.text = "Sosial Şəbəkə paylaş";
-            newButton.isSubmited = true;
-          }
-          newButton.id = id;
-          return newButton;
-        })
+      const foundUser = data.find(user => user.id === id);
+      if(foundUser){
+        setModal(prevModal => ({...prevModal, data:foundUser}));
       }
     }
-  },[window.location, data]);
+  },[data, modal])
 
   // Functions
   const toggleModal = () => {
-    setModal(!modal);
+    setModal(prevModal => ({...prevModal, visible:!prevModal.visible}));
   };
+
+
   return (
     <>
-      <Modal visible={modal} closeModal={toggleModal}  isSubmit={button.isSubmited}/>
+      <Modal visible={modal.visible} closeModal={toggleModal} data={modal.data} />
       <Spin
         spinning={loading}
         tip="Loading..."
@@ -61,25 +62,29 @@ const App = () => {
             <div className={styles.content}>
               <div className={styles.bubbles}>
                 {
-                  data.slice(0,count).map((item, index) =><Bubble key={index} {...item}  index={index}/> )
+                  data.slice(0,count.top).map((item, index) =><Bubble key={index} {...item}  index={index}/> )
                 }
               </div>
               <div className={styles.bubbles}>
-                {data.slice(count+1).map((item, index) => (
+                {data.slice(count.top+1, data.length-count.bottom).map((item, index) => (
                   <Bubble key={index} {...item}  index={index}/>
                 ))}
               </div>
+              <div className={styles.bubbles}>
+                {
+                  data.slice(data.length-count.bottom).map((item, index) =><Bubble key={index} {...item}  index={index}/> )
+                }
+              </div>
             </div>
           </div>
-          {
-            button.id && <div className={styles.button}>
+           <div className={styles.button}>
             <Button
               title={button.text}
               type="primary"
               onClick={toggleModal}
             />
           </div>
-          }
+          
         </div>
       </Spin>
     </>
